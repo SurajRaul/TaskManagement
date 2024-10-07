@@ -29,9 +29,9 @@ ngOnInit() {
 }
 
 logout(){
-  // localStorage.removeItem('authToken');
+  localStorage.removeItem('authToken');
   this.authService.logout();
-  // this.isLoggedIn=false;
+  this.isLoggedIn=false;
   this.router.navigate(['/login']);
 }
 

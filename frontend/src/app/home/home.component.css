@@ -16,4 +16,12 @@
   .weekly-monthly-stats{
     display: flex;
   }
+  .box{
+    width: max-content;
+  }
+  .box1{
+    width: 850px;
+    border: 1px solid rgb(224, 216, 216);
+    border-radius: 15px;
+  }
   

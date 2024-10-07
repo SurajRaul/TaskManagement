@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 let jwtSecret: any;
-jwtSecret = process.env.JWT_SECRET || 'defaultSecret';
+jwtSecret ='abcdefg';
 
 interface AuthRequest extends Request {
     user?: { id: any };

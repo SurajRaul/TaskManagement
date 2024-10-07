@@ -39,10 +39,11 @@ await this.taskService.createTask({name:this.newTaskName,stage:0});
   this.loadTasks();
 }
 
-async editTask(taskId: string, taskName: string) {
+async editTask(taskId: string, taskName: string,stage:string) {
   const updatedName = prompt('Edit Task Name', taskName);
+  const updatedstage = prompt('Edit stage Name', stage);
   if (updatedName) {
-    await this.taskService.updateTask(taskId, { name: updatedName });
+    await this.taskService.updateTask(taskId, { name: updatedName,stage:updatedstage });
     this.loadTasks();
   }
 } 

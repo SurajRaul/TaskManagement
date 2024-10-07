@@ -38,7 +38,7 @@ Login=new Login();
     try{
         const res=await this.authService.login(this.loginForm.value);
         localStorage.setItem('authToken',res.data.token);
-       this.router.navigate(['/home']);      
+       this.router.navigate(['/home'])
     }catch(err){
       console.log('LOgin failed',err);
     }

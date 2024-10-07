@@ -50,8 +50,3 @@ export class TaskServService {
   }
 }
 
-//   async moveTask(taskId: string, direction: 'forward' | 'backward') {
-//     return await axios.patch(`${this.apiUrl}/${taskId}/move/${direction}`);
-//   }
-
-// }

@@ -24,7 +24,7 @@
               <div class="d-flex">
                 <button class="btn btn-secondary btn-sm me-1" (click)="updateTaskStage(task, 'back')" [disabled]="task.stage === 0">Back</button>
                 <button class="btn btn-secondary btn-sm me-1" (click)="updateTaskStage(task, 'forward')" [disabled]="task.stage === 3">Forward</button>
-                <button class="btn btn-warning btn-sm me-1" (click)="editTask(task._id,task.name)">Edit</button>
+                <button class="btn btn-warning btn-sm me-1" (click)="editTask(task._id,task.name,task.stage)">Edit</button>
                 <button class="btn btn-danger btn-sm" (click)="deleteTask(task._id)">Delete</button>
               </div>
             </li>

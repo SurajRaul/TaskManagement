@@ -8,7 +8,7 @@ dotenv.config();
 
 // let jwtSecret:any;
 // jwtSecret = process.env.JWT_SECRET;
-const jwtSecret: string = process.env.JWT_SECRET || 'defaultSecret'; 
+const jwtSecret: string = 'abcdefg'; 
 interface RegisterReq extends Request {
     body: {
         username: string;
