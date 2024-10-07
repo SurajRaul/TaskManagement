@@ -7,7 +7,7 @@ router.post('/', authMid, createTask);
 router.get('/', authMid, getAll);
 router.put('/:id', authMid, updateTask);
 router.delete('/:id', authMid, deleteTask);
-// router.patch('/:id/move/:direction', authMid, moveTask);
+router.patch('/:id/move/:direction', authMid, moveTask);
 router.get('/stats', authMid, getTaskStats);
 
 export default router;

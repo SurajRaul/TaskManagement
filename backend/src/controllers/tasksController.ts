@@ -59,21 +59,29 @@ const deleteTask = async (req: Request, res: Response) => {
     }
 }
 
-const moveTask = async (req: Request, res: Response) => {
-    const authReq = req as AuthReq;
+const moveTask: express.RequestHandler = async (req, res): Promise<void> => {
+    const authReq = req as AuthReq; 
     try {
         const task = await Task.findById(req.params.id);
-        if (!task) return res.status(404).json({ message: 'Task not found' });
+        if (!task) {
+            res.status(404).json({ message: 'Task not found' });
+            return; 
+        }
+
         if (req.params.direction === 'forward' && task.stage < 3) {
             task.stage += 1;
         } else if (req.params.direction === 'backward' && task.stage > 0) {
             task.stage -= 1;
+        } else {
+            res.status(400).json({ message: 'Cannot move task further' });
+            return; 
         }
-        await task.save();
-        res.json(task);
-    } catch (err) {
-        res.status(500).json({ message: 'Err while moving',err });  //500---Internal server error
 
+        await task.save();
+        res.json(task); 
+    } catch (err) {
+        console.error('Error while moving task:', err);
+        res.status(500).json({ message: 'Error while moving task', err });
     }
 }
 
@@ -86,7 +94,7 @@ const getTaskStats= async (req: Request,res:Response) => {
         const totalPending = tasks.filter(task => task.stage < 3).length;
 
         const today=new Date();
-        const weekStart= new Date(today.setDate(today.getDate()-today.getDay()+ (today.getDay() === 0 ? -6 : 1)));
+        const weekStart = new Date(today.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1))); 
 
         const weekly=tasks.filter(task => {
             return new Date(task.createdAt) >= weekStart;
