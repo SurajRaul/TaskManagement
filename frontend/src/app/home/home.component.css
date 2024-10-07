@@ -1,0 +1,19 @@
+/* .dashboard {
+    background-color: #ddeed9; 
+  } */
+  
+  .stat {
+    border: 1px solid #01060a; /* Card border color */
+  }
+  
+  .card-title {
+    font-size: 1.3rem; 
+  }
+  
+  .card-text {
+    font-size: 1.25rem; 
+  }
+  .weekly-monthly-stats{
+    display: flex;
+  }
+  
