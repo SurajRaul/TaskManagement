@@ -20,7 +20,7 @@ constructor(private taskService:TaskServService,private authService: TaskAuthSer
   
 }
 ngOnInit() {
-  // this.loadStatistics();
+  this.loadStatistics();
 }
 
 async loadStatistics() {
