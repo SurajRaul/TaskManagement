@@ -1,0 +1,48 @@
+# Node.js specific
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Angular specific
+node_modules/         
+/dist                  
+/tmp
+/.angular
+/.angular-cache
+out-tsc/
+
+# Logs
+logs/
+*.log
+
+# IDE specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependency directories
+coverage/
+.DS_Store
+
+# MongoDB specific
+*.mongodb
+*.mongo
+*.db
+*.lock
+dump/
+mongodump/
+*.rdb
+
+# MongoDB logs
+mongod.log
+mongod.lock
+
+# MongoDB data dump
+dump/
+*.archive
+*.bson
+*.json
+
