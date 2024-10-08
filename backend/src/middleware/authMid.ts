@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 dotenv.config();
-let jwtSecret: any;
+let jwtSecret: string;
 jwtSecret ='abcdefg';
 
 interface AuthRequest extends Request {

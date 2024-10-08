@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TaskServService } from '../tasks/task-serv.service';
 import { TaskAuthService } from '../auth/task-auth.service';
 import { Router } from '@angular/router';
-
+import { Task } from '../customclass/task';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,8 +14,8 @@ export class HomeComponent {
   totalCompleted: number = 0;
   totalPending: number = 0;
 
-  tasks: any[] = [];
-  filterTask: any[] = [];
+  tasks: Task[] = [];
+  filterTask: Task[] = [];
 
   yearToFilter: number = 2024;
   totalTasksY: number = 0;
