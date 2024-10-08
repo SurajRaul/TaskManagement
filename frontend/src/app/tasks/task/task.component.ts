@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TaskServService } from '../task-serv.service';
+import { Task } from '../../customclass/task';
 
 @Component({
   selector: 'app-task',
@@ -39,23 +40,25 @@ await this.taskService.createTask({name:this.newTaskName,stage:0});
   this.loadTasks();
 }
 
-async editTask(taskId: string, taskName: string,stage:string) {
+async editTask(taskId: string, taskName: string, stage:string) {
   const updatedName = prompt('Edit Task Name', taskName);
   const updatedstage = prompt('Edit stage Name', stage);
+  const us=Number(updatedstage);
   if (updatedName) {
-    await this.taskService.updateTask(taskId, { name: updatedName,stage:updatedstage });
+    await this.taskService.updateTask(taskId, { name: updatedName,stage:us });
     this.loadTasks();
   }
 } 
-async updateTaskStage(task: any, direction: 'back' | 'forward') {
+async updateTaskStage(task: Task, direction: 'back' | 'forward') {
   const newStage = direction === 'back' ? task.stage - 1 : task.stage + 1;
 
   if (newStage >= 0 && newStage <= 3) {
     task.stage = newStage;
-    await this.taskService.updateTask(task._id, { stage: newStage });
+    await this.taskService.updateTask(task._id, { name:task.name,stage: newStage });
     this.loadTasks();
   }
 }
+
 async deleteTask(taskId: string) {
   const confirmDelete = confirm('Are you sure you want to delete this task?');
   if (confirmDelete) {

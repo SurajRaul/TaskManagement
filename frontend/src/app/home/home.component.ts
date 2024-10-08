@@ -88,9 +88,9 @@ export class HomeComponent {
 
   filterTaskByWeek(year: number, weekNum: number) {
     const firstDayOfYear = new Date(year, 0, 1);
-    const dayOffset = (weekNum - 1) * 7;
+    const weekSet = (weekNum - 1) * 7;
 
-    const startDate = new Date(firstDayOfYear.setDate(firstDayOfYear.getDate() + dayOffset));
+    const startDate = new Date(firstDayOfYear.setDate(firstDayOfYear.getDate() + weekSet));
     startDate.setDate(startDate.getDate() - startDate.getDay()); // Start week on Sunday
 
     const endDate = new Date(startDate);

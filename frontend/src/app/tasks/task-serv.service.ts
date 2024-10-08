@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { CreateT } from '../customclass/create-t';
+import { UpdateT } from '../customclass/update-t';
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +24,14 @@ export class TaskServService {
     return response.data;
   }
 
-  async createTask(task: any) {
+  async createTask(task: CreateT) {
     const token = this.getToken();
-    console.log(task);
     return await axios.post(this.baseUrl, task, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
 
-  async updateTask(taskId: string, updatedTask: any) {
+  async updateTask(taskId: string, updatedTask: UpdateT) {
     const token = this.getToken();
     return await axios.put(`${this.baseUrl}/${taskId}`, updatedTask, {
       headers: { Authorization: `Bearer ${token}` },
@@ -52,4 +53,5 @@ export class TaskServService {
   }
 
 }
+
 

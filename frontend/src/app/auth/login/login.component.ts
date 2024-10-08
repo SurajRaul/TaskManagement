@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Login } from '../../customclass/login';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskServService } from '../../tasks/task-serv.service';
-import { ReloadService } from '../../service/reload.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +14,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   Login = new Login();
 
-  constructor(private authService: TaskAuthService, private router: Router, private taskService: TaskServService, private reloadService: ReloadService) {
+  constructor(private authService: TaskAuthService, private router: Router, private taskService: TaskServService) {
     this.loginForm = new FormGroup({
       email: new FormControl(this.Login.email, [Validators.required, Validators.email]),
       password: new FormControl(this.Login.password, [Validators.required])

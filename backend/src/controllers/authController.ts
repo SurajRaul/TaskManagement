@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, response, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
@@ -6,9 +6,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// let jwtSecret:any;
-// jwtSecret = process.env.JWT_SECRET;
-const jwtSecret: string = 'abcdefg'; 
+const jwtSecret: string = process.env.JWT_SECRET || 'abcdefg'; 
+
 interface RegisterReq extends Request {
     body: {
         username: string;
@@ -55,7 +54,7 @@ const login = async (req: LoginReq, res: any) => {
 
         const token = jwt.sign({ id: user._id}, jwtSecret, { expiresIn: '2h' });
         res.json({ token });
-
+        
     } catch (err) {
         res.status(500).json({ message: 'login failed',err })
     }
