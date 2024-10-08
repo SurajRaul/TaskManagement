@@ -85,46 +85,4 @@ const moveTask: express.RequestHandler = async (req, res): Promise<void> => {
     }
 }
 
-const getTaskStats= async (req: Request,res:Response) => {
-    const authReq = req as AuthReq;
-    try{
-        const tasks:ITask[]=await Task.find({userId:authReq.user.id});
-        const totalTasks=tasks.length;
-        const totalCompleted=tasks.filter(task => task.stage === 3).length;
-        const totalPending = tasks.filter(task => task.stage < 3).length;
-
-        const today=new Date();
-        const weekStart = new Date(today.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1))); 
-
-        const weekly=tasks.filter(task => {
-            return new Date(task.createdAt) >= weekStart;
-        })
-        const totalW = weekly.length;
-        const totalCompletedW = weekly.filter(task => task.stage === 3).length;
-        const totalPendingW = weekly.filter(task => task.stage < 3).length;  
-
-        const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-        const monthlyTasks = tasks.filter(task => {
-            return new Date(task.createdAt) >= monthStart;
-        });
-
-        const totalM = monthlyTasks.length;
-        const totalCompletedM = monthlyTasks.filter(task => task.stage === 3).length;
-        const totalPendingM = monthlyTasks.filter(task => task.stage < 3).length;
-
-        res.json({
-            totalTasks,totalCompleted,totalPending,
-            weekly:{
-                total:totalW, completed: totalCompletedW, pending: totalPendingW
-            },
-            monthly: {
-                total:totalM, completed: totalCompletedM, pending: totalPendingM 
-            }
-        })
-    }catch(err){
-        console.log(err);
-        res.status(500).json({ message: 'Stats LOading error'});
-    }
-}
-
-export { createTask, getAll, updateTask, deleteTask, moveTask, getTaskStats}
+export { createTask, getAll, updateTask, deleteTask, moveTask}

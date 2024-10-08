@@ -24,4 +24,10 @@
     border: 1px solid rgb(224, 216, 216);
     border-radius: 15px;
   }
+
+
+  .width{
+    max-width: 300px;
+  }
+  
   

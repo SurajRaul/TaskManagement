@@ -1,4 +1,4 @@
-import { Component,Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { TaskAuthService } from '../task-auth.service';
 import { Router } from '@angular/router';
 import { Login } from '../../customclass/login';
@@ -12,35 +12,34 @@ import { ReloadService } from '../../service/reload.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-loginForm:FormGroup;
-Login=new Login();
-  // email:string='';
-  // password:string='';
-  
-  constructor(private authService:TaskAuthService, private router:Router, private taskService:TaskServService,private reloadService:ReloadService){
-    this.loginForm=new FormGroup({
-      email: new FormControl(this.Login.email,[Validators.required,Validators.email]),
-      password: new FormControl(this.Login.password,[Validators.required])
+  loginForm: FormGroup;
+  Login = new Login();
+
+  constructor(private authService: TaskAuthService, private router: Router, private taskService: TaskServService, private reloadService: ReloadService) {
+    this.loginForm = new FormGroup({
+      email: new FormControl(this.Login.email, [Validators.required, Validators.email]),
+      password: new FormControl(this.Login.password, [Validators.required])
     })
   }
 
-  get email(){
+  get email() {
     return this.loginForm.get('email');
   }
-  get password(){
+  get password() {
     return this.loginForm.get('password');
   }
 
-  async handleLogin(){
+  async handleLogin() {
     if (this.loginForm.invalid) {
       return;
     }
-    try{
-        const res=await this.authService.login(this.loginForm.value);
-        localStorage.setItem('authToken',res.data.token);
-       this.router.navigate(['/home'])
-    }catch(err){
-      console.log('LOgin failed',err);
+    try {
+      const res = await this.authService.login(this.loginForm.value);
+      localStorage.setItem('authToken', res.data.token);
+      this.router.navigateByUrl('/home')
+    } catch (err) {
+      alert('Please enter Valid Credentials');
+      console.log('LOgin failed', err);
     }
   }
 }

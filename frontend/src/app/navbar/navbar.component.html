@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-lg navbar-light text-bg-info">
-  <a class="navbar-brand ms-2" routerLink="/">Task Management</a>
+  <a class="navbar-brand ms-3" routerLink="/">Task Management</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,15 +13,15 @@
               <a class="nav-link" routerLink="/tasks">Tasks</a>
           </li>
       </ul>
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ms-auto">
           <li class="nav-item" *ngIf="!isLoggedIn"> 
               <a class="nav-link" routerLink="/login">Login</a>
           </li>
           <li class="nav-item" *ngIf="!isLoggedIn">
-              <a class="nav-link" routerLink="/register">Register</a>
+              <a class="nav-link me-3" routerLink="/register">Register</a>
           </li>
           <li class="nav-item" *ngIf="isLoggedIn">
-              <a class="nav-link" (click)="logout()">Logout</a>
+              <a class="nav-link me-3" (click)="logout()">Logout</a>
           </li>
       </ul>
   </div>

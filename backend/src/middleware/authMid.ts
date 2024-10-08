@@ -19,7 +19,6 @@ const authMid = (req: AuthRequest, res: Response, next: NextFunction): void => {
     try {
         const decoded = jwt.verify(token, jwtSecret) as { id: string };
         req.user = { id: decoded.id };
-        // res.json({ message: 'done'});
         next();
     } catch {
         res.status(401).json({ message: 'Token is not valid' });

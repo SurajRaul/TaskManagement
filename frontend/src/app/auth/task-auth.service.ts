@@ -9,7 +9,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TaskAuthService {
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) { 
+    const token=localStorage.getItem('authToken');
+    if(token){
+      this.store.dispatch(login({token}));
+    }
+    axios.interceptors.request.use((config) => {
+      config.headers['Cache-Control'] = 'no-cache';
+      return config;
+    });
+  }
 
   
   async register(user:any){

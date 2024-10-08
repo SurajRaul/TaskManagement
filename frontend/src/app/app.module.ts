@@ -11,8 +11,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './store/auth/auth.reducer';
-import { RefreshComponent } from './refresh/refresh.component';
-
+import { TaskServService } from './tasks/task-serv.service';
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +22,6 @@ import { RefreshComponent } from './refresh/refresh.component';
     TaskComponent,
     NavbarComponent,
     FooterComponent,
-    RefreshComponent,
   ],
   imports: [
     BrowserModule,

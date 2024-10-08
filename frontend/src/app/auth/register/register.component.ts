@@ -12,11 +12,6 @@ import { Customval } from '../../customclass/customval';
 export class RegisterComponent {
   registerForm: FormGroup;
   signin=new Signin();
-  // username:string='';
-  // email:string='';
-  // contactNumber:string='';
-  // password:string='';
-  // confirmPassword:string='';
 
   constructor(private authService: TaskAuthService, private router: Router, private fb: FormBuilder) {
     this.registerForm = new FormGroup({

@@ -5,7 +5,6 @@ import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './home/home.component';
 import { TaskComponent } from './tasks/task/task.component';
 import { AuthGuard } from './auth/auth.guard';
-import { RefreshComponent } from './refresh/refresh.component';
 
 const routes: Routes = [
   {
