@@ -2,8 +2,9 @@ import express, { Request, response, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import dotenv from 'dotenv';
-
+import * as dotenv from 'dotenv';
+import { validationResult } from 'express-validator';
+ import { SucessResObj,ErrorResObj } from '../utility/responseSegregator';
 dotenv.config();
 
 const jwtSecret: string = process.env.JWT_SECRET || 'abcdefg'; 
@@ -24,39 +25,54 @@ interface LoginReq extends Request {
     };
 }
 
+
 const register = async (req: RegisterReq, res: Response) => {
+    const errors=validationResult(req);
+    if(!errors.isEmpty()){
+        return ErrorResObj(res,`Express Validation errors : ${errors.array()}`, 400); 
+    }
+
     const { username, email, contactNumber, password } = req.body;
 
     try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return ErrorResObj(res,'User already exists with this email',400);
+        }
+
         const hashPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             username, email, contactNumber, password: hashPassword
         });
         await newUser.save();
-        res.status(201).json({ message: 'User registered' });  //201---created
+        SucessResObj(res,'User registered sucessfully',null,201);
     } catch (err) {
-        res.status(400).json({ message: 'not register' });   //400--Bad request
+        return ErrorResObj(res,'Registration Failed',400);
     }
 }
 
 const login = async (req: LoginReq, res: any) => {
+    const errors=validationResult(req);
+    if(!errors.isEmpty()){
+        return ErrorResObj(res, `Express Validation errors : ${errors.array()}`, 400); 
+    }
+
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ message: 'Invalid CRedntial' });
+            return ErrorResObj(res, 'Invalid credentials', 400);
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid CRedntial' });
+            return ErrorResObj(res, 'Invalid credentials', 400);
         }
 
         const token = jwt.sign({ id: user._id}, jwtSecret, { expiresIn: '2h' });
-        res.json({ token });
-        
+        SucessResObj(res, 'Login successful', { token });
     } catch (err) {
-        res.status(500).json({ message: 'login failed',err })
+        ErrorResObj(res, `Login failed: ${err}`, 500);
     }
 }
 

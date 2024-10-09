@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
+
 let jwtSecret: string;
 jwtSecret = process.env.JWT_SECRET || 'abcdefg';
 

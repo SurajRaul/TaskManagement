@@ -22,7 +22,7 @@ export class RegisterComponent {
       confirmPassword: new FormControl(""),
     },[Customval.valueMatch("password","confirmPassword")])
   }
-
+  
   get username(){
     return this.registerForm.get('username');
   }

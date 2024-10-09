@@ -34,7 +34,7 @@ export class LoginComponent {
     }
     try {
       const res = await this.authService.login(this.loginForm.value);
-      localStorage.setItem('authToken', res.data.token);
+      localStorage.setItem('authToken', res.data.data.token);
       this.router.navigateByUrl('/home')
     } catch (err) {
       alert('Please enter Valid Credentials');

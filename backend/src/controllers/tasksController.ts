@@ -1,6 +1,7 @@
 import express, { Request, response, Response } from 'express';
 import Task ,{ ITask } from '../models/Task';
 import { ObjectId } from 'mongoose';
+import { ErrorResObj, SucessResObj } from '../utility/responseSegregator';
 
 interface AuthReq extends Request {
     user: {
@@ -19,9 +20,9 @@ const createTask = async (req: Request, res: Response): Promise<void> => {
     const newTask = new Task({ name, userId: authReq.user.id, stage });
     try {
         await newTask.save();
-        res.status(201).json({ message: 'New Task created' });
-    } catch {
-        res.status(400).json({ message: 'Err creating task' });
+        SucessResObj(res, 'New task created', newTask, 201);
+    } catch(err) {
+        ErrorResObj(res, `Error creating task: ${err}`, 500);
     }
 }
 
@@ -29,9 +30,9 @@ const getAll = async (req: Request, res: Response) => {
     const authReq = req as AuthReq;
     try {
         const tasks = await Task.find({ userId: authReq.user.id });
-        res.json(tasks);
-    } catch {
-        res.status(404).json({ message: 'data not found' });
+        SucessResObj(res, 'Tasks retrieved successfully', tasks);
+    } catch(err) {
+        ErrorResObj(res, `Error fetching tasks: ${err}`, 500);
     }
 }
 
@@ -41,11 +42,11 @@ const updateTask = async (req: Request, res: Response) => {
     try {
         const task = await Task.findByIdAndUpdate(req.params.id, { name, stage }, { new: true });
         if (!task) {
-            res.status(404).json({ message: 'task not found' });
+            return ErrorResObj(res, 'Task not found', 404);
         }
-        res.json(task);
+        SucessResObj(res, 'Task updated successfully', task);
     } catch (err) {
-        res.status(400).json({ message: 'Error updating task', err });
+        ErrorResObj(res, `Error updating task: ${err}`, 500);
     }
 }
 
@@ -53,10 +54,10 @@ const deleteTask = async (req: Request, res: Response) => {
     const authReq = req as AuthReq;
     try {
         await Task.findByIdAndDelete(req.params.id);
-        res.status(204).json({ message: 'deleted' })  //204---no content to send
-    } catch (err) {
-        res.status(404).json({ message: 'err deletingtask', err });
-    }
+        SucessResObj(res, 'Task deleted successfully', null, 204);
+        } catch (err) {
+        ErrorResObj(res, `Error deleting task: ${err}`, 500);
+    }       
 }
 
 const moveTask: express.RequestHandler = async (req, res): Promise<void> => {
@@ -64,8 +65,7 @@ const moveTask: express.RequestHandler = async (req, res): Promise<void> => {
     try {
         const task = await Task.findById(req.params.id);
         if (!task) {
-            res.status(404).json({ message: 'Task not found' });
-            return; 
+            return ErrorResObj(res, 'Task not found', 404);
         }
 
         if (req.params.direction === 'forward' && task.stage < 3) {
@@ -73,15 +73,14 @@ const moveTask: express.RequestHandler = async (req, res): Promise<void> => {
         } else if (req.params.direction === 'backward' && task.stage > 0) {
             task.stage -= 1;
         } else {
-            res.status(400).json({ message: 'Cannot move task further' });
-            return; 
+            return ErrorResObj(res, 'Cannot move task further', 400);
         }
 
         await task.save();
-        res.json(task); 
+        SucessResObj(res, 'Task saved', task, 201);
     } catch (err) {
-        console.error('Error while moving task:', err);
-        res.status(500).json({ message: 'Error while moving task', err });
+        return ErrorResObj(res, `Error while moving task ${err}`, 500);
+
     }
 }
 

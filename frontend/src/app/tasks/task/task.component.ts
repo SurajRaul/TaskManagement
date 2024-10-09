@@ -20,7 +20,8 @@ ngOnInit(){
 }
 
 async loadTasks() {
-  this.tasks = await this.taskService.getTasks();
+   const task= await this.taskService.getTasks();
+   this.tasks=task.data;
 }
 
 getTasksByStage(stage: number) {

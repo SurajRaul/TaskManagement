@@ -17,7 +17,7 @@ export class HomeComponent {
   tasks: Task[] = [];
   filterTask: Task[] = [];
 
-  yearToFilter: number = 2024;
+  yearToFilter: number = new Date().getFullYear();
   totalTasksY: number = 0;
   totalCompletedY: number = 0;
   totalPendingY: number = 0;
@@ -28,7 +28,7 @@ export class HomeComponent {
   totalCompletedM: number = 0;
   totalPendingM: number = 0;
 
-  weekToFilter: number = 0;
+  weekToFilter: number = 41;
   totalTasksW: number = 0;
   totalCompletedW: number = 0;
   totalPendingW: number = 0;
@@ -41,7 +41,7 @@ export class HomeComponent {
 
   async load() {
     const tasks = await this.taskService.getTasks();
-    this.tasks = tasks;
+    this.tasks = tasks.data;
     this.filterTasks();
     this.filterTaskByYear(this.yearToFilter);
   }
@@ -76,7 +76,7 @@ export class HomeComponent {
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59); // Last day of the month
 
-    const monthFilteredTasks = this.filterTask.filter((task: any) => {
+    const monthFilteredTasks = this.filterTask.filter((task: Task) => {
       const createDate = new Date(task.createdAt);
       return createDate >= startDate && createDate <= endDate;
     });
@@ -97,7 +97,7 @@ export class HomeComponent {
     endDate.setDate(startDate.getDate() + 6);
     endDate.setHours(23, 59, 59);
 
-    const weekFilteredTasks = this.filterTask.filter((task: any) => {
+    const weekFilteredTasks = this.filterTask.filter((task: Task) => {
       const createDate = new Date(task.createdAt);
       return createDate >= startDate && createDate <= endDate;
     });
