@@ -30,7 +30,7 @@ export class LoginComponent {
 
   async handleLogin() {
     if (this.loginForm.invalid) {
-      return;
+      return alert('Please Enter Some Values To Login');
     }
     try {
       const res = await this.authService.login(this.loginForm.value);

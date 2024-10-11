@@ -10,9 +10,15 @@ import { Credlogin } from '../customclass/credlogin';
 })
 export class TaskAuthService {
 
-  constructor(private store: Store) { 
+  constructor(private store: Store) {
+    this.checkLoginStatus();
   }
-
+  checkLoginStatus(){
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.store.dispatch(login({ token }));
+    }
+  }
   async register(user:Register){
     return await axios.post('http://localhost:4000/auth/register',user);
   }

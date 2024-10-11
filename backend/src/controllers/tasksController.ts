@@ -2,6 +2,7 @@ import express, { Request, response, Response } from 'express';
 import Task ,{ ITask } from '../models/Task';
 import { ObjectId } from 'mongoose';
 import { ErrorResObj, SucessResObj } from '../utility/responseSegregator';
+import { validationResult } from 'express-validator';
 
 interface AuthReq extends Request {
     user: {
@@ -12,12 +13,20 @@ interface updateT extends Request {
     body: {
         name: string;
         stage: number;
+        priority: string;
+        description: string;
+        type:string;
+        project:string;
     }
 }
 const createTask = async (req: Request, res: Response): Promise<void> => {
-    const { name, stage } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return ErrorResObj(res, `Express Validation errors : ${errors.array()}`, 400); 
+    }
+    const { name, stage, priority, description, type, project } = req.body;
     const authReq = req as AuthReq;
-    const newTask = new Task({ name, userId: authReq.user.id, stage });
+    const newTask = new Task({ name, userId: authReq.user.id, stage, priority, description, type, project});
     try {
         await newTask.save();
         SucessResObj(res, 'New task created', newTask, 201);
@@ -37,10 +46,15 @@ const getAll = async (req: Request, res: Response) => {
 }
 
 const updateTask = async (req: Request, res: Response) => {
-    const { name, stage } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return ErrorResObj(res, `Express Validation errors : ${errors.array()}`, 400); 
+    } 
+    
+    const { name, stage, priority, description, type, project } = req.body;
     const authReq = req as AuthReq & updateT;
     try {
-        const task = await Task.findByIdAndUpdate(req.params.id, { name, stage }, { new: true });
+        const task = await Task.findByIdAndUpdate(req.params.id, { name, stage, priority, description, type, project }, { new: true });
         if (!task) {
             return ErrorResObj(res, 'Task not found', 404);
         }

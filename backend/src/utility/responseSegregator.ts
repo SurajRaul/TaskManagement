@@ -8,7 +8,7 @@ interface IResponse{
 
 const SucessResObj = (res:Response, message:string, data?:any, statusCode:number=200):void => {
     res.status(statusCode).json({
-        status: 'success',
+        status: statusCode,
         message,
         data
     })
@@ -16,7 +16,7 @@ const SucessResObj = (res:Response, message:string, data?:any, statusCode:number
 
 const ErrorResObj = (res:Response,message:string,statusCode:number=400):void =>{
     res.status(statusCode).json({
-        status:'error',
+        status:statusCode,
         message
     })
 }

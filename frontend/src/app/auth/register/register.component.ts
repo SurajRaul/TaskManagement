@@ -45,7 +45,7 @@ export class RegisterComponent {
   async handleRegister() {
 
     if (this.registerForm.invalid) {
-      return;
+      return alert('Please Enter Some Values To Register');
     }
 
     try {

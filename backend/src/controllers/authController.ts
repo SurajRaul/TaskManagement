@@ -4,10 +4,10 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import * as dotenv from 'dotenv';
 import { validationResult } from 'express-validator';
- import { SucessResObj,ErrorResObj } from '../utility/responseSegregator';
+import { SucessResObj,ErrorResObj } from '../utility/responseSegregator';
 dotenv.config();
 
-const jwtSecret: string = process.env.JWT_SECRET || 'abcdefg'; 
+// const jwtSecret: string = process.env.JWT_SECRET || 'abcdefg'; 
 
 interface RegisterReq extends Request {
     body: {
@@ -69,7 +69,7 @@ const login = async (req: LoginReq, res: any) => {
             return ErrorResObj(res, 'Invalid credentials', 400);
         }
 
-        const token = jwt.sign({ id: user._id}, jwtSecret, { expiresIn: '2h' });
+        const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET!, { expiresIn: '2h' });
         SucessResObj(res, 'Login successful', { token });
     } catch (err) {
         ErrorResObj(res, `Login failed: ${err}`, 500);
