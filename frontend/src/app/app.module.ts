@@ -5,14 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './home/home.component';
-import { TaskComponent } from './tasks/task/task.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './store/auth/auth.reducer';
-import { TaskServService } from './tasks/task-serv.service';
 import { CookieService } from 'ngx-cookie-service';
+import { HomeComponent } from './components/home/home.component';
+import { TaskComponent } from './components/task/task.component';
+import { NavbarComponent } from './shared_components/navbar/navbar.component';
+import { FooterComponent } from './shared_components/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,

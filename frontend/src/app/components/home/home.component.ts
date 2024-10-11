@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { TaskServService } from '../tasks/task-serv.service';
-import { TaskAuthService } from '../auth/task-auth.service';
+import { TaskServService } from '../../shared_service/task-serv.service';
+import { TaskAuthService } from '../../shared_service/task-auth.service';
 import { Router } from '@angular/router';
-import { Task } from '../customclass/task';
+import { Task } from '../../customclass/task';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

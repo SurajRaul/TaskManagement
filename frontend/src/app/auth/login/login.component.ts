@@ -1,9 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { TaskAuthService } from '../task-auth.service';
+import { TaskAuthService } from '../../shared_service/task-auth.service';
 import { Router } from '@angular/router';
 import { Login } from '../../customclass/login';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TaskServService } from '../../tasks/task-serv.service';
+import { TaskServService } from '../../shared_service/task-serv.service';
 
 @Component({
   selector: 'app-login',

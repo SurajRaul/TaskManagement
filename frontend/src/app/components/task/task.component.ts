@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TaskServService } from '../task-serv.service';
+import { TaskServService } from '../../shared_service/task-serv.service';
 import { Task } from '../../customclass/task';
 
 @Component({
@@ -40,8 +40,8 @@ export class TaskComponent {
   }
 
   async createTask() {
-    if (this.newTaskName.trim() === '') {
-      alert('Task name cannot be empty');
+    if (this.newTaskName.trim() === '' || this.newDescription.trim()=== '' || this.newTaskPriority === '' || this.newTaskType === '' || this.newTaskProject ==='') {
+      alert('Please enter all values to proceed');
       return;
     }
 
@@ -54,16 +54,6 @@ export class TaskComponent {
     this.loadTasks();
   }
 
-  // async editTask(taskId: string, taskName: string, stage: string, priority: string) {
-  //   const updatedName = prompt('Edit Task Name', taskName);
-  //   const updatedstage = prompt('Edit stage Name', stage);
-  //   const updatedPriority = prompt('Edit priority', priority);
-  //   const stageChange = Number(updatedstage);
-  //   if (updatedName) {
-  //     await this.taskService.updateTask(taskId, { name: updatedName, stage: stageChange, priority: updatedPriority || 'medium', description: });
-  //     this.loadTasks();
-  //   }
-  // }
 
   async startEditing(task: Task) {
     this.editingTaskId = task._id;

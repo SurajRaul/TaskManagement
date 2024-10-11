@@ -1,0 +1,133 @@
+<div class="container mt-4 manage-tasks bottom">
+    <h1 class="text-center display-8 fw-bold my-4 text-dark">Manage Tasks</h1>
+    <div class="row mb-3">
+      <div class="col-md-3 mb-2">
+        <input type="text" class="form-control" [(ngModel)]="newTaskName" placeholder="New Task Name"
+          aria-label="New Task Name" />
+      </div>
+      <div class="col-md-2 mb-2">
+        <input type="text" class="form-control" [(ngModel)]="newDescription" placeholder="Description"
+          aria-label="newDescription" />
+      </div>
+      <div class="col-md-2 mb-2">
+        <select class="form-select" [(ngModel)]="newTaskPriority">
+          <option value="" [disabled]="true">Priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+      <div class="col-md-2 mb-2">
+        <select class="form-select" [(ngModel)]="newTaskType">
+          <option value="" [disabled]="true">Task Type</option>
+          <option value="Testing">Testing</option>
+          <option value="Development" selected>Development</option>
+          <option value="Deployment">Deployment</option>
+        </select>
+      </div>
+      <div class="col-md-2 mb-2">
+        <select class="form-select" [(ngModel)]="newTaskProject">
+          <option value="" [disabled]="true">Project</option>
+          <option value="Deloite">Deloite</option>
+          <option value="Infosys" selected>Infosys</option>
+          <option value="Tcs">Tcs</option>
+          <option value="Mahindra">Tech Mahindra</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary w-100" (click)="createTask()">Create</button>
+      </div>
+    </div>
+  
+    <div class="container mt-4 align-items-center">
+      <div class="col" *ngFor="let stage of [0, 1, 2, 3]; let i = index">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="mb-0">{{ stage === 0 ? 'Backlog' : stage === 1 ? 'ToDo' : stage === 2 ? 'Ongoing' : 'Done' }}</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li *ngFor="let task of getTasksByStage(i)" class="list-group-item">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <div *ngIf="editingTaskId === task._id">
+                      <input type="text" class="form-control mb-2" [(ngModel)]="editedTaskName"
+                        placeholder="Edit Task Name" />
+                      <select class="form-control mb-2" [(ngModel)]="editedTaskStage">
+                        <option [value]="0">Backlog</option>
+                        <option [value]="1">ToDo</option>
+                        <option [value]="2">Ongoing</option>
+                        <option [value]="3">Done</option>
+                      </select>
+                      <input type="textarea" class="form-control mb-2" [(ngModel)]="editedTaskDescription"
+                        placeholder="Edit Task Description" />
+                      <div class="row">
+                        <div class="col-md-4">
+                          <select class="form-select mb-2 md-2" [(ngModel)]="editedTaskPriority">
+                            <option value="" [disabled]="true">Priority</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <select class="form-select mb-2" [(ngModel)]="editedTaskType">
+                            <option value="" [disabled]="true">Task Type</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Development">Development</option>
+                            <option value="Deployment">Deployment</option>
+                          </select>
+                        </div>
+  
+                        <div class="col-md-4">
+                          <select class="form-select mb-2" [(ngModel)]="editedTaskProject">
+                            <option value="" [disabled]="true">Project</option>
+                            <option value="Deloite">Deloite</option>
+                            <option value="Infosys">Infosys</option>
+                            <option value="Tcs">Tcs</option>
+                            <option value="Mahindra">Tech Mahindra</option>
+                          </select>
+                        </div>
+                      </div>
+                      <button class="btn btn-success btn-outline-sucess me-2 mb-1"
+                        (click)="saveEditTask(task._id)">Save</button>
+                      <button class="btn btn-light btn-outline-dark mb-1" (click)="cancelEdit()">Cancel</button>
+                    </div>
+                    <div class="mt-2" *ngIf="editingTaskId !== task._id">
+                      {{ task.name }}
+                    </div>
+                  </div>
+  
+                  <div class="col-12 col-md-2 mt-2">
+                    priority: <button class="btn btn-outline-primary btn-sm me-1">{{ task.priority }}</button>
+                  </div>
+  
+                  <div class="col-12 col-md-3">
+                    <p class="d-inline-flex gap-1">
+                      <a class="btn btn-info btn-sm mt-2" data-bs-toggle="collapse" href="#multiCollapseExample1"
+                        role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Description</a>
+                    </p>
+                    <div class="row">
+                      <div class="col">
+                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+                          <div class="card card-body">{{task.description || '----Nothing----'}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 d-flex justify-content-end mt-2">
+                    <button class="btn btn-secondary btn-sm me-1" (click)="updateTaskStage(task, 'back')"
+                      [disabled]="task.stage === 0">Back</button>
+                    <button class="btn btn-secondary btn-sm me-1" (click)="updateTaskStage(task, 'forward')"
+                      [disabled]="task.stage === 3">Forward</button>
+                    <button class="btn btn-warning btn-sm me-1" (click)="startEditing(task)">Edit</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteTask(task._id)">Delete</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TaskAuthService } from '../task-auth.service';
+import { TaskAuthService } from '../../shared_service/task-auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Signin } from '../../customclass/signin';
