@@ -1,6 +1,6 @@
 <div class="container mt-4 manage-tasks bottom">
     <h1 class="text-center display-8 fw-bold my-4 text-dark">Manage Tasks</h1>
-    <div class="row mb-3">
+    <div class="row mb-3 ms-1 me-1">
       <div class="col-md-3 mb-2">
         <input type="text" class="form-control" [(ngModel)]="newTaskName" placeholder="New Task Name"
           aria-label="New Task Name" />
@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-2 mb-2">
         <select class="form-select" [(ngModel)]="newTaskPriority">
-          <option value="" [disabled]="true">Priority</option>
+          <option value="" [disabled]="true" [hidden]="true">Priority</option>
           <option value="Low">Low</option>
           <option value="Medium" selected>Medium</option>
           <option value="High">High</option>
@@ -19,7 +19,7 @@
       </div>
       <div class="col-md-2 mb-2">
         <select class="form-select" [(ngModel)]="newTaskType">
-          <option value="" [disabled]="true">Task Type</option>
+          <option value="" [disabled]="true" [hidden]="true">Task Type</option>
           <option value="Testing">Testing</option>
           <option value="Development" selected>Development</option>
           <option value="Deployment">Deployment</option>
@@ -27,7 +27,7 @@
       </div>
       <div class="col-md-2 mb-2">
         <select class="form-select" [(ngModel)]="newTaskProject">
-          <option value="" [disabled]="true">Project</option>
+          <option value="" [disabled]="true" [hidden]="true">Project</option>
           <option value="Deloite">Deloite</option>
           <option value="Infosys" selected>Infosys</option>
           <option value="Tcs">Tcs</option>

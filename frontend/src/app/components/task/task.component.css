@@ -10,3 +10,7 @@
 .btn-secondary{
     height: 30px;
 }
+
+.form-select option[value=""] {
+    color: #999; 
+  }
